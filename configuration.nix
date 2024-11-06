@@ -6,7 +6,8 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
@@ -88,7 +89,10 @@
   users.users.princedimond = {
     isNormalUser = true;
     description = "princedimond";
-    extraGroups = ["networkmanager" "wheel"];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [
       kdePackages.kate
       #  thunderbird
@@ -127,7 +131,10 @@
     glances
     pro-office-calculator
     mission-center
+    pkgs.gnome.gnome-disk-utility
     pkgs.python312
+    orca-slicer
+    fastfetch
     inputs.nixvim.packages.x86_64-linux.default
   ];
 
@@ -147,7 +154,10 @@
   services.expressvpn.enable = true;
 
   # Enable Flakes
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
