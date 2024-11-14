@@ -135,6 +135,7 @@
     pkgs.python312
     orca-slicer
     fastfetch
+    meld
     inputs.nixvim.packages.x86_64-linux.default
   ];
 
