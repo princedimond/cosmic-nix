@@ -95,12 +95,17 @@
     ];
     packages = with pkgs; [
       kdePackages.kate
-      #  thunderbird
+      thunderbird
     ];
   };
 
   # Install firefox.
   programs.firefox.enable = true;
+
+  # Install NPM and associated NPM packages
+  programs.npm = {
+    enable = true;    
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -112,7 +117,6 @@
     wget
     curl
     git
-    thunderbird
     microsoft-edge
     ferdium
     protonvpn-gui
@@ -136,6 +140,7 @@
     orca-slicer
     fastfetch
     meld
+    node2nix
     inputs.nixvim.packages.x86_64-linux.default
   ];
 
