@@ -104,7 +104,7 @@
 
   # Install NPM and associated NPM packages
   programs.npm = {
-    enable = true;    
+    enable = true;
   };
 
   # Allow unfree packages
@@ -141,6 +141,7 @@
     fastfetch
     meld
     node2nix
+    nixd
     inputs.nixvim.packages.x86_64-linux.default
   ];
 
