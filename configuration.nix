@@ -142,8 +142,27 @@
     meld
     node2nix
     nixd
+    helix
     inputs.nixvim.packages.x86_64-linux.default
   ];
+
+  #kernel options
+  boot = {
+    # Kernel
+    kernelPackages = pkgs.linuxPackages_zen;
+    # This is for OBS Virtual Cam Support
+    kernelModules = [ "v4l2loopback" ];
+    extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+    # Needed For Some Steam Games
+    kernel.sysctl = {
+      "vm.max_map_count" = 2147483642;
+    };
+    # Make /tmp a tmpfs
+    tmp = {
+      useTmpfs = false;
+      tmpfsSize = "30%";
+    };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
