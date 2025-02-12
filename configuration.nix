@@ -135,7 +135,7 @@
     glances
     pro-office-calculator
     mission-center
-    pkgs.gnome.gnome-disk-utility
+    pkgs.gnome-disk-utility
     pkgs.python312
     orca-slicer
     fastfetch
@@ -143,6 +143,9 @@
     node2nix
     nixd
     helix
+    helix-gpt
+    nh
+    apacheHttpd
     inputs.nixvim.packages.x86_64-linux.default
   ];
 
