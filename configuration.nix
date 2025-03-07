@@ -125,7 +125,7 @@
     btop
     vscode
     bitwarden
-    expressvpn
+    #expressvpn
     onlyoffice-bin
     gitkraken
     direnv
@@ -146,6 +146,7 @@
     helix-gpt
     nh
     apacheHttpd
+    nemo
     inputs.nixvim.packages.x86_64-linux.default
   ];
 
@@ -180,7 +181,7 @@
   programs.neovim.vimAlias = true;
 
   # List services that you want to enable:
-  services.expressvpn.enable = true;
+  #services.expressvpn.enable = true;
 
   # Enable Flakes
   nix.settings.experimental-features = [

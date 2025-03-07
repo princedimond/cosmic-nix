@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11"; # NOTE: change "unstable" to "24.05" if you are using NixOS 24.05
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable"; # NOTE: change "unstable" to "24.05" if you are using NixOS 24.05
     nixvim.url = "github:dc-tec/nixvim";
 
     nixos-cosmic = {
