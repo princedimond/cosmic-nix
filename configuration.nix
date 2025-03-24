@@ -125,7 +125,6 @@
     btop
     vscode
     bitwarden
-    #expressvpn
     onlyoffice-bin
     gitkraken
     direnv
@@ -147,6 +146,8 @@
     nh
     apacheHttpd
     nemo
+    hplip
+    #expressvpn
     inputs.nixvim.packages.x86_64-linux.default
   ];
 
