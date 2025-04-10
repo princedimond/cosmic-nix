@@ -96,6 +96,7 @@
     packages = with pkgs; [
       kdePackages.kate
       thunderbird
+      tailscale
     ];
   };
 
@@ -148,6 +149,7 @@
     nemo
     hplip
     expressvpn
+    kdePackages.gwenview
     inputs.nixvim.packages.x86_64-linux.default
   ];
 
@@ -183,6 +185,7 @@
 
   # List services that you want to enable:
   services.expressvpn.enable = true;
+  services.tailscale.enable = true;
 
   # Enable Flakes
   nix.settings.experimental-features = [
