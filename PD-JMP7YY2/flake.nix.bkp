@@ -1,0 +1,47 @@
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11"; # NOTE: change "unstable" to "24.05" if you are using NixOS 24.05
+    nixpkgs.follows = "nixos-cosmic/nixpkgs-stable"; # NOTE: change "nixpkgs" to "nixpkgs-stable" to use stable nixos release
+    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+    nixvim.url = "github:dc-tec/nixvim";
+    #chrome-remote-desktop.url = https://gist.github.com/princedimond/65aa4f48537f03aae1a464a74ebdfda7;
+    #nixos-cosmic = {
+    # url = "github:lilyinstarlight/nixos-cosmic";
+    # inputs.nixpkgs.follows = "nixpkgs";
+    # };
+  };
+
+  outputs =
+    inputs@{
+      self,
+      nixpkgs,
+      nixos-cosmic,
+      nixvim,
+    #:crd,
+    }:
+    {
+      nixosConfigurations = {
+        # NOTE: change "host" to your system's hostname
+        PD-JMP7YY2 = nixpkgs.lib.nixosSystem {
+          specialArgs = { inherit inputs; };
+          PD-G4BK722 = nixpkgs.lib.nixosSystem {
+            specialArgs = {
+              inherit inputs;
+            };
+            modules = [
+              {
+                nix.settings = {
+                  substituters = [ "https://cosmic.cachix.org/" ];
+                  trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+                };
+              }
+              nixos-cosmic.nixosModules.default
+              ./configuration.nix
+              ./crd.nix
+              # ./default.nix
+            ];
+          };
+        };
+      };
+    };
+}
