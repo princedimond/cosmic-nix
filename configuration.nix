@@ -120,8 +120,8 @@
     git
     microsoft-edge
     ferdium
-    protonvpn-gui
-    protonvpn-cli
+    #protonvpn-gui
+    #protonvpn-cli
     gitkraken
     btop
     vscode
