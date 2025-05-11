@@ -97,6 +97,10 @@
       kdePackages.kate
       thunderbird
       thunderbolt
+      ventoy-full
+      wine
+      wine64
+      wine-wayland
     ];
   };
 
@@ -144,12 +148,18 @@
     meld
     #node2nix
     nixd
-    helix
+    #helix
     helix-gpt
     nh
     apacheHttpd
     tailscale
     thunderbolt
+    affine
+    gthumb
+    kdePackages.gwenview
+    evil-helix
+    xfce.thunar
+    evil-helix
     inputs.zen-browser.packages.x86_64-linux.default
     inputs.zen-browser.packages.x86_64-linux.specific
     inputs.zen-browser.packages.x86_64-linux.generic
