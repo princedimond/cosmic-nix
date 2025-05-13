@@ -18,6 +18,13 @@
       zen-browser,
     }:
     {
+    packages.x86_64-linux.evil-helix = import ./evil-helix.nix {
+      pkgs = import nixpkgs { system = "x86_64-linux"; };
+      };
+
+    packages.x86_64-linux.crd = import ./crd.nix {
+      pkgs = import nixpkgs { system = "x86_64-linux"; };
+      };
       nixosConfigurations = {
         # NOTE: change "host" to your system's hostname
         PD-JMP7YY2 = nixpkgs.lib.nixosSystem {
