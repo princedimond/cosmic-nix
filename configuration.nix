@@ -50,7 +50,7 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  #services.displayManager.sddm.enable = true;
+  # services.displayManager.sddm.enable = true;
   # services.desktopManager.plasma6.enable = true;
 
   # Enable the Cosmic Desktop Environment
@@ -67,7 +67,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -118,7 +118,8 @@
     wget
     curl
     git
-    microsoft-edge
+    pv
+    #microsoft-edge
     ferdium
     #protonvpn-gui
     #protonvpn-cli
@@ -142,7 +143,6 @@
     meld
     node2nix
     nixd
-    helix
     helix-gpt
     nh
     apacheHttpd
@@ -150,8 +150,18 @@
     hplip
     expressvpn
     kdePackages.gwenview
+    affine
+    discord
+    putty
+    evil-helix
+    flatpak
     inputs.nixvim.packages.x86_64-linux.default
   ];
+
+  services.flatpak.packages = [
+    "com.microsoft.Edge"
+  ];
+
 
   #kernel options
   boot = {
@@ -186,12 +196,38 @@
   # List services that you want to enable:
   services.expressvpn.enable = true;
   services.tailscale.enable = true;
+  services.flatpak.enable = true;
 
-  # Enable Flakes
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  systemd.services.flatpak-repo = {
+    path = [ pkgs.flatpak ];
+    script = ''
+      flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+      flatpak install -y microsoft-edge
+    '';
+  };
+
+  # Enable Flakes & Cleanup
+   nix = {
+    settings = {
+      auto-optimise-store = true;
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      substituters = [ "https://hyprland.cachix.org" ];
+      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+  };
+
+  #nix.settings.experimental-features = [
+   # "nix-command"
+   # "flakes"
+  #];
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
