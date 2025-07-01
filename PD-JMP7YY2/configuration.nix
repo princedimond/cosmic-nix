@@ -86,6 +86,7 @@
   #services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  # define user princedimond
   users.users.princedimond = {
     isNormalUser = true;
     description = "princedimond";
@@ -97,13 +98,28 @@
       kdePackages.kate
       thunderbird
       thunderbolt
-      ventoy-full
+      #ventoy-full
       wine
       wine64
       wine-wayland
     ];
   };
 
+  #define user guest
+  users.users.guest = {
+    isNormalUser = true;
+    description = "guest";
+    initialPassword = "guest";
+    extraGroups = [
+      "networkmanager"
+      #"wheel"
+    ];
+    packages = with pkgs; [
+      kdePackages.kate
+      thunderbolt
+    ];
+  };
+  
   # Install firefox.
   #programs.firefox.enable = true;
 
@@ -159,10 +175,22 @@
     kdePackages.gwenview
     evil-helix
     xfce.thunar
+    hplipWithPlugin
+    hplip
+    system-config-printer
+    imagemagick
+    graphicsmagick-imagemagick-compat
+    gthumb
+    discord
+    flatpak
     inputs.zen-browser.packages.x86_64-linux.default
     inputs.zen-browser.packages.x86_64-linux.specific
     inputs.zen-browser.packages.x86_64-linux.generic
     inputs.nixvim.packages.x86_64-linux.default
+  ];
+
+ services.flatpak.packages = [
+    "com.microsoft.Edge"
   ];
 
   #kernel options
@@ -199,13 +227,39 @@
   services.expressvpn.enable = true;
   services.tailscale.enable = true;
   services.hardware.bolt.enable = true;
+  services.flatpak.enable = true;
 
   # Enable Flakes
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+#  nix.settings.experimental-features = [
+#    "nix-command"
+#    "flakes"
+#  ];
 
+systemd.services.flatpak-repo = {
+    path = [ pkgs.flatpak ];
+    script = ''
+      flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+      flatpak install -y microsoft-edge
+    '';
+  };
+
+# Enable Flakes & Cleanup
+   nix = {
+    settings = {
+      auto-optimise-store = true;
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      #substituters = [ "https://hyprland.cachix.org" ];
+      #trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+    };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
+    };
+  };
   #SystemD Stop Job Fix
   systemd.extraConfig = ''
     DefaultTimeoutStopSec=10s

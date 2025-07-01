@@ -3,19 +3,21 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable"; # NOTE: change "unstable" to "24.05" if you are using NixOS 24.05
     nixvim.url = "github:dc-tec/nixvim";
     zen-browser.url = "github:MarceColl/zen-browser-flake";
-    nixos-cosmic = {
-      url = "github:lilyinstarlight/nixos-cosmic";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+   # nixos-cosmic = {
+    #  url = "github:lilyinstarlight/nixos-cosmic";
+     # inputs.nixpkgs.follows = "nixpkgs";
+    #};
+    nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
   };
 
   outputs =
     inputs@{
       self,
       nixpkgs,
-      nixos-cosmic,
+      #nixos-cosmic,
       nixvim,
       zen-browser,
+      nix-flatpak,
     }:
     {
     packages.x86_64-linux.evil-helix = import ./evil-helix.nix {
@@ -32,13 +34,14 @@
             inherit inputs;
           };
           modules = [
-            {
-              nix.settings = {
-                substituters = [ "https://cosmic.cachix.org/" ];
-                trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
-              };
-            }
-            nixos-cosmic.nixosModules.default
+          #  {
+           #   nix.settings = {
+            #    substituters = [ "https://cosmic.cachix.org/" ];
+             #   trusted-public-keys = [ "cosmic.cachix.org-1:Dya9IyXD4xdBehWjrkPv6rtxpmMdRel02smYzA85dPE=" ];
+             # };
+            #}
+           # nixos-cosmic.nixosModules.default
+             nix-flatpak.nixosModules.nix-flatpak
             ./configuration.nix
           ];
         };
