@@ -189,9 +189,9 @@
     inputs.nixvim.packages.x86_64-linux.default
   ];
 
- services.flatpak.packages = [
-    "com.microsoft.Edge"
-  ];
+# services.flatpak.packages = [
+#    "com.microsoft.Edge"
+#  ];
 
   #kernel options
   boot = {
