@@ -128,6 +128,8 @@
     vscode
     bitwarden
     onlyoffice-bin
+    libreoffice-fresh
+    calibre
     gitkraken
     direnv
     vlc
@@ -155,13 +157,18 @@
     putty
     evil-helix
     flatpak
+    teamviewer
+    kdePackages.okular
+    winbox4
+    inputs.zen-browser.packages.x86_64-linux.default
+    inputs.zen-browser.packages.x86_64-linux.specific
+    inputs.zen-browser.packages.x86_64-linux.generic
     inputs.nixvim.packages.x86_64-linux.default
   ];
 
   services.flatpak.packages = [
     "com.microsoft.Edge"
   ];
-
 
   #kernel options
   boot = {
@@ -197,6 +204,7 @@
   services.expressvpn.enable = true;
   services.tailscale.enable = true;
   services.flatpak.enable = true;
+  services.teamviewer.enable = true;
 
   systemd.services.flatpak-repo = {
     path = [ pkgs.flatpak ];
@@ -207,7 +215,7 @@
   };
 
   # Enable Flakes & Cleanup
-   nix = {
+  nix = {
     settings = {
       auto-optimise-store = true;
       experimental-features = [
@@ -225,8 +233,8 @@
   };
 
   #nix.settings.experimental-features = [
-   # "nix-command"
-   # "flakes"
+  # "nix-command"
+  # "flakes"
   #];
 
   # Enable the OpenSSH daemon.
