@@ -52,14 +52,14 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  #services.xserver.displayManager.sddm.enable = true;
-  #services.displayManager.sddm.wayland.enable = false;
-  #services.displayManager.sddm.theme = "catppuccin-mocha";
-  #services.desktopManager.plasma6.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = false;
+  services.displayManager.sddm.theme = "catppuccin-mocha";
+  services.desktopManager.plasma6.enable = true;
 
   # Enable the Cosmic Desktop Environment
   services.desktopManager.cosmic.enable = true;
-  services.displayManager.cosmic-greeter.enable = true;
+  # services.displayManager.cosmic-greeter.enable = true;
   # services.displayManager.gdm.enable = true;
 
   # Configure keymap in X11
@@ -171,9 +171,9 @@
     nil
     anytype
     anytype-heart
-    #kdePackages.sddm
+    kdePackages.sddm
     lunacy
-    #catppuccin-sddm
+    catppuccin-sddm
     #gdm
     inputs.zen-browser.packages.x86_64-linux.default
     inputs.zen-browser.packages.x86_64-linux.specific
