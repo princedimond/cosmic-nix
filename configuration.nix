@@ -131,8 +131,8 @@
     gitkraken
     btop
     vscode
-    bitwarden
-    onlyoffice-bin
+    bitwarden-desktop
+    onlyoffice-desktopeditors
     libreoffice-fresh
     calibre
     gitkraken
@@ -157,7 +157,7 @@
     hplip
     expressvpn
     kdePackages.gwenview
-    affine
+    # affine
     discord
     putty
     evil-helix
@@ -175,6 +175,7 @@
     lunacy
     #catppuccin-sddm
     #gdm
+    chirp
     inputs.zen-browser.packages.x86_64-linux.default
     inputs.zen-browser.packages.x86_64-linux.specific
     inputs.zen-browser.packages.x86_64-linux.generic
