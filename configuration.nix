@@ -32,6 +32,13 @@
   # Set your time zone.
   time.timeZone = "America/Chicago";
 
+  #Other Environment Configs
+  environment.shellAliases = {
+    fr = "nh os switch --hostname PD-G4BK722 ~/cosmic/$hostname";
+    fu = "nh os switch --hostname PD-G4BK722 ~/cosmic/$hostname --update";
+    v = "nvim";
+  };
+
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -176,15 +183,15 @@
     #catppuccin-sddm
     #gdm
     chirp
+    appflowy
     inputs.zen-browser.packages.x86_64-linux.default
-    inputs.zen-browser.packages.x86_64-linux.specific
-    inputs.zen-browser.packages.x86_64-linux.generic
     inputs.nixvim.packages.x86_64-linux.default
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
     "libsoup-2.74.3"
     "electron-35.7.5"
+    "ventoy-1.1.07"
   ];
 
   services.flatpak.packages = [
