@@ -24,6 +24,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    catppuccin = {
+      url = "github:catppuccin/nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -35,6 +40,7 @@
       zen-browser,
       nixvim,
       nix-flatpak,
+      catppuccin,
       ...
     }:
     let
@@ -54,6 +60,15 @@
             nix-flatpak.nixosModules.nix-flatpak
             # nixos-cosmic.nixosModules.default
             ./configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.princedimond = import ./home.nix;
+                backupFileExtension = "backup";
+              };
+            }
           ];
         };
       };

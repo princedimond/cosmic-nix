@@ -34,8 +34,8 @@
 
   #Other Environment Configs
   environment.shellAliases = {
-    fr = "nh os switch --hostname PD-G4BK722 ~/cosmic/$hostname";
-    fu = "nh os switch --hostname PD-G4BK722 ~/cosmic/$hostname --update";
+    fr = "nh os switch --hostname ${config.networking.hostName} ~/cosmic/${config.networking.hostName}/";
+    fu = "nh os switch --hostname ${config.networking.hostName} ~/cosmic/${config.networking.hostName}/ --update";
     v = "nvim";
   };
 
@@ -167,7 +167,7 @@
     # affine
     discord
     putty
-    evil-helix
+    #evil-helix
     flatpak
     teamviewer
     kdePackages.okular
