@@ -176,14 +176,15 @@
     warp-terminal
     zed-editor
     nil
-    anytype
-    anytype-heart
+    #anytype
+    #anytype-heart
     #kdePackages.sddm
     lunacy
     #catppuccin-sddm
-    #gdm
     chirp
     appflowy
+    libayatana-appindicator
+    libayatana-common
     inputs.zen-browser.packages.x86_64-linux.default
     inputs.nixvim.packages.x86_64-linux.default
   ];
@@ -196,6 +197,7 @@
 
   services.flatpak.packages = [
     "com.microsoft.Edge"
+    "app.openbubbles.OpenBubbles"
   ];
 
   #kernel options
@@ -249,6 +251,7 @@
     script = ''
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
       flatpak install -y microsoft-edge
+      flatpak install -y app.openbubbles.OpenBubbles
     '';
   };
 
