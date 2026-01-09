@@ -32,13 +32,6 @@
   # Set your time zone.
   time.timeZone = "America/Chicago";
 
-  #Other Environment Configs
-  environment.shellAliases = {
-    fr = "nh os switch --hostname ${config.networking.hostName} ~/cosmic/${config.networking.hostName}/";
-    fu = "nh os switch --hostname ${config.networking.hostName} ~/cosmic/${config.networking.hostName}/ --update";
-    v = "nvim";
-  };
-
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
@@ -59,14 +52,14 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  #services.xserver.displayManager.sddm.enable = true;
-  #services.displayManager.sddm.wayland.enable = false;
-  #services.displayManager.sddm.theme = "catppuccin-mocha";
-  #services.desktopManager.plasma6.enable = true;
+  services.xserver.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = false;
+  services.displayManager.sddm.theme = "catppuccin-mocha";
+  services.desktopManager.plasma6.enable = true;
 
   # Enable the Cosmic Desktop Environment
   services.desktopManager.cosmic.enable = true;
-  services.displayManager.cosmic-greeter.enable = true;
+  # services.displayManager.cosmic-greeter.enable = true;
   # services.displayManager.gdm.enable = true;
 
   # Configure keymap in X11
@@ -138,8 +131,8 @@
     gitkraken
     btop
     vscode
-    bitwarden-desktop
-    onlyoffice-desktopeditors
+    bitwarden
+    onlyoffice-bin
     libreoffice-fresh
     calibre
     gitkraken
@@ -164,10 +157,10 @@
     hplip
     expressvpn
     kdePackages.gwenview
-    # affine
+    affine
     discord
     putty
-    #evil-helix
+    evil-helix
     flatpak
     teamviewer
     kdePackages.okular
@@ -176,28 +169,24 @@
     warp-terminal
     zed-editor
     nil
-    #anytype
-    #anytype-heart
-    #kdePackages.sddm
+    anytype
+    anytype-heart
+    kdePackages.sddm
     lunacy
-    #catppuccin-sddm
-    chirp
-    appflowy
-    libayatana-appindicator
-    libayatana-common
+    catppuccin-sddm
+    #gdm
     inputs.zen-browser.packages.x86_64-linux.default
+    inputs.zen-browser.packages.x86_64-linux.specific
+    inputs.zen-browser.packages.x86_64-linux.generic
     inputs.nixvim.packages.x86_64-linux.default
   ];
 
   nixpkgs.config.permittedInsecurePackages = [
     "libsoup-2.74.3"
-    "electron-35.7.5"
-    "ventoy-1.1.07"
   ];
 
   services.flatpak.packages = [
     "com.microsoft.Edge"
-    "app.openbubbles.OpenBubbles"
   ];
 
   #kernel options
@@ -251,7 +240,6 @@
     script = ''
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
       flatpak install -y microsoft-edge
-      flatpak install -y app.openbubbles.OpenBubbles
     '';
   };
 
