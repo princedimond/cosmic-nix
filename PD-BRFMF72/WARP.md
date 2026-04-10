@@ -4,7 +4,7 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-This is a NixOS system configuration using Nix flakes for the hostname `PD-G4BK722`. The configuration is specifically set up to run the COSMIC desktop environment with various productivity and development tools.
+This is a NixOS system configuration using Nix flakes for the hostname `${config.networking.hostName} `. The configuration is specifically set up to run the COSMIC desktop environment with various productivity and development tools.
 
 ## Architecture and Structure
 
@@ -37,10 +37,10 @@ This is a NixOS system configuration using Nix flakes for the hostname `PD-G4BK7
 ### Building and Applying Configuration
 ```bash
 # Build the configuration (dry-run to check for errors)
-sudo nixos-rebuild dry-build --flake .#PD-G4BK722
+sudo nixos-rebuild dry-build --flake .#${config.networking.hostName} 
 
 # Apply the configuration
-sudo nixos-rebuild switch --flake .#PD-G4BK722
+sudo nixos-rebuild switch --flake .#${config.networking.hostName} 
 
 # Build and switch in one command
 sudo nixos-rebuild switch --flake .
@@ -52,10 +52,10 @@ nix flake update && sudo nixos-rebuild switch --flake .
 ### Testing Configuration Changes
 ```bash
 # Test configuration without making it the default boot option
-sudo nixos-rebuild test --flake .#PD-G4BK722
+sudo nixos-rebuild test --flake .#${config.networking.hostName} 
 
 # Build configuration in a VM for testing
-nixos-rebuild build-vm --flake .#PD-G4BK722
+nixos-rebuild build-vm --flake .#${config.networking.hostName} 
 ```
 
 ### Flake Management
@@ -129,7 +129,7 @@ services.your-service = {
 - COSMIC desktop environment is enabled with cosmic-greeter display manager
 - Flakes and nix-command experimental features are enabled
 - Automatic store optimization and weekly garbage collection are configured
-- The hostname is `PD-G4BK722` - update this in flake.nix if deploying elsewhere
+- The hostname is `${config.networking.hostName} ` - update this in flake.nix if deploying elsewhere
 - Hardware configuration should not be manually edited - regenerate with `nixos-generate-config`
 
 ## Troubleshooting

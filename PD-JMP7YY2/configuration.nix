@@ -11,15 +11,13 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    #./node-packages.nix
-    #./node-env.nix
   ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "PD-G4BK722"; # Define your hostname.
+  networking.hostName = "PD-JMP7YY2"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -30,7 +28,7 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "America/Chicago";
+  time.timeZone = "America/New_York";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
@@ -52,15 +50,12 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = false;
-  services.displayManager.sddm.theme = "catppuccin-mocha";
-  services.desktopManager.plasma6.enable = true;
+  services.displayManager.sddm.enable = true;
+  # services.desktopManager.plasma6.enable = true;
 
   # Enable the Cosmic Desktop Environment
   services.desktopManager.cosmic.enable = true;
-  # services.displayManager.cosmic-greeter.enable = true;
-  # services.displayManager.gdm.enable = true;
+  services.displayManager.cosmic-greeter.enable = true;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -72,7 +67,7 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
+  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -91,6 +86,7 @@
   #services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
+  # define user princedimond
   users.users.princedimond = {
     isNormalUser = true;
     description = "princedimond";
@@ -101,12 +97,31 @@
     packages = with pkgs; [
       kdePackages.kate
       thunderbird
-      tailscale
+      thunderbolt
+      #ventoy-full
+      wine
+      wine64
+      wine-wayland
     ];
   };
 
+  #define user guest
+  users.users.guest = {
+    isNormalUser = true;
+    description = "guest";
+    initialPassword = "guest";
+    extraGroups = [
+      "networkmanager"
+      #"wheel"
+    ];
+    packages = with pkgs; [
+      kdePackages.kate
+      thunderbolt
+    ];
+  };
+  
   # Install firefox.
-  programs.firefox.enable = true;
+  #programs.firefox.enable = true;
 
   # Install NPM and associated NPM packages
   programs.npm = {
@@ -123,18 +138,17 @@
     wget
     curl
     git
-    pv
-    #microsoft-edge
+    microsoft-edge
     ferdium
-    #protonvpn-gui
-    #protonvpn-cli
+    protonvpn-gui
+    protonvpn-cli
     gitkraken
+    github-desktop
     btop
     vscode
     bitwarden
+    expressvpn
     onlyoffice-bin
-    libreoffice-fresh
-    calibre
     gitkraken
     direnv
     vlc
@@ -148,54 +162,44 @@
     orca-slicer
     fastfetch
     meld
-    node2nix
+    #node2nix
     nixd
+    #helix
     helix-gpt
     nh
     apacheHttpd
-    nemo
-    hplip
-    expressvpn
-    kdePackages.gwenview
+    tailscale
+    thunderbolt
     affine
-    discord
-    putty
+    gthumb
+    kdePackages.gwenview
     evil-helix
+    xfce.thunar
+    hplipWithPlugin
+    hplip
+    system-config-printer
+    imagemagick
+    graphicsmagick-imagemagick-compat
+    gthumb
+    discord
     flatpak
-    teamviewer
-    kdePackages.okular
-    winbox4
-    onefetch
-    warp-terminal
-    zed-editor
-    nil
-    anytype
-    anytype-heart
-    kdePackages.sddm
-    lunacy
-    catppuccin-sddm
-    #gdm
     inputs.zen-browser.packages.x86_64-linux.default
     inputs.zen-browser.packages.x86_64-linux.specific
     inputs.zen-browser.packages.x86_64-linux.generic
     inputs.nixvim.packages.x86_64-linux.default
   ];
 
-  nixpkgs.config.permittedInsecurePackages = [
-    "libsoup-2.74.3"
-  ];
-
-  services.flatpak.packages = [
-    "com.microsoft.Edge"
-  ];
+# services.flatpak.packages = [
+#    "com.microsoft.Edge"
+#  ];
 
   #kernel options
   boot = {
     # Kernel
     kernelPackages = pkgs.linuxPackages_zen;
     # This is for OBS Virtual Cam Support
-    #kernelModules = [ "v4l2loopback" ];
-    #extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
+    kernelModules = [ "v4l2loopback" ];
+    extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
     # Needed For Some Steam Games
     kernel.sysctl = {
       "vm.max_map_count" = 2147483642;
@@ -222,20 +226,16 @@
   # List services that you want to enable:
   services.expressvpn.enable = true;
   services.tailscale.enable = true;
+  services.hardware.bolt.enable = true;
   services.flatpak.enable = true;
-  services.teamviewer.enable = true;
-  /*
-    services.greetd = {
-      enable = true;
-      settings = {
-        default.session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --sessions /usr/share/xsessions: /usr/share/wayland-sessions --remember --remember-user-session";
-        };
-      };
-    };
-  */
 
-  systemd.services.flatpak-repo = {
+  # Enable Flakes
+#  nix.settings.experimental-features = [
+#    "nix-command"
+#    "flakes"
+#  ];
+
+systemd.services.flatpak-repo = {
     path = [ pkgs.flatpak ];
     script = ''
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -243,16 +243,16 @@
     '';
   };
 
-  # Enable Flakes & Cleanup
-  nix = {
+# Enable Flakes & Cleanup
+   nix = {
     settings = {
       auto-optimise-store = true;
       experimental-features = [
         "nix-command"
         "flakes"
       ];
-      substituters = [ "https://hyprland.cachix.org" ];
-      trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
+      #substituters = [ "https://hyprland.cachix.org" ];
+      #trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
     };
     gc = {
       automatic = true;
@@ -260,11 +260,11 @@
       options = "--delete-older-than 7d";
     };
   };
-
-  #nix.settings.experimental-features = [
-  # "nix-command"
-  # "flakes"
-  #];
+  #SystemD Stop Job Fix
+  systemd.extraConfig = ''
+    DefaultTimeoutStopSec=10s
+    DefaultTimeoutStartSec=10s
+  '';
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;

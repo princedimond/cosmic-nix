@@ -29,6 +29,16 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
@@ -51,7 +61,7 @@
     {
       nixosConfigurations = {
         # NOTE: change "host" to your system's hostname
-        PD-G4BK722 = nixpkgs.lib.nixosSystem {
+        PD-BRFMF72 = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
             inherit inputs;
@@ -60,12 +70,22 @@
             nix-flatpak.nixosModules.nix-flatpak
             # nixos-cosmic.nixosModules.default
             ./configuration.nix
+            ./host-apps.nix
             home-manager.nixosModules.home-manager
             {
               home-manager = {
+                extraSpecialArgs = {
+                  inherit inputs;
+                };
                 useGlobalPkgs = true;
                 useUserPackages = true;
-                users.princedimond = import ./home.nix;
+                users.princedimond = {
+                  imports = [
+                   ./home.nix
+                   cosmic-manager.homeManagerModules.cosmic-manager
+                   inputs.catppuccin.homeModules.catppuccin
+                  ];
+                };
                 backupFileExtension = "backup";
               };
             }

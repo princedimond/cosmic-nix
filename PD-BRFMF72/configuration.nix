@@ -11,15 +11,16 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    #./node-packages.nix
-    #./node-env.nix
+    #./host-apps.nix
   ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "PD-G4BK722"; # Define your hostname.
+  boot.initrd.luks.devices."luks-c13e9b1b-dd46-4a7b-9fc0-42586d576c21".device =
+    "/dev/disk/by-uuid/c13e9b1b-dd46-4a7b-9fc0-42586d576c21";
+  networking.hostName = "PD-BRFMF72"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -34,8 +35,8 @@
 
   #Other Environment Configs
   environment.shellAliases = {
-    fr = "nh os switch --hostname ${config.networking.hostName} ~/cosmic/${config.networking.hostName}/";
-    fu = "nh os switch --hostname ${config.networking.hostName} ~/cosmic/${config.networking.hostName}/ --update";
+    fr = "nh os switch --hostname ${config.networking.hostName} ~/cosmic-nix/${config.networking.hostName}/";
+    fu = "nh os switch --hostname ${config.networking.hostName} ~/cosmic-nix/${config.networking.hostName}/ --update";
     v = "nvim";
   };
 
@@ -81,18 +82,20 @@
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+  /*
+    services.pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+      # If you want to use JACK applications, uncomment this
+      #jack.enable = true;
 
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
-  };
+      # use the example session manager (no others are packaged yet so this is enabled by default,
+      # no need to redefine it in your config for now)
+      #media-session.enable = true;
+    };
+  */
 
   # Enable touchpad support (enabled default in most desktopManager).
   #services.xserver.libinput.enable = true;
@@ -113,7 +116,10 @@
   };
 
   # Install firefox.
-  programs.firefox.enable = true;
+  programs.firefox.enable = false;
+
+  #make evil helix dfault shell editor
+  environment.variables.EDITOR = "hx";
 
   # Install NPM and associated NPM packages
   programs.npm = {
@@ -130,11 +136,11 @@
     wget
     curl
     git
+    gh
+    lazygit
     pv
     #microsoft-edge
     ferdium
-    #protonvpn-gui
-    #protonvpn-cli
     gitkraken
     btop
     vscode
@@ -150,24 +156,24 @@
     glances
     pro-office-calculator
     mission-center
+    resources
     pkgs.gnome-disk-utility
-    pkgs.python312
+    #pkgs.python312
     orca-slicer
     fastfetch
+    microfetch
     meld
-    node2nix
+    #node2nix
     nixd
-    helix-gpt
+    #helix-gpt
     nh
     apacheHttpd
-    nemo
     hplip
     expressvpn
     kdePackages.gwenview
-    # affine
+    affine
     discord
     putty
-    #evil-helix
     flatpak
     teamviewer
     kdePackages.okular
@@ -175,16 +181,45 @@
     onefetch
     warp-terminal
     zed-editor
+    logseq
+    #joplin-desktop
+    standardnotes
     nil
-    #anytype
-    #anytype-heart
-    #kdePackages.sddm
+    anytype
+    anytype-heart
     lunacy
-    #catppuccin-sddm
     chirp
     appflowy
     libayatana-appindicator
     libayatana-common
+    input-leap
+    deskflow
+    solaar
+    logitech-udev-rules
+    xdg-desktop-portal-cosmic
+    cosmic-ext-tweaks
+    dia
+    keybase-gui
+    kbfs
+    keybase
+    rdesktop
+    windterm
+    tree
+    naps2
+    virt-viewer
+    spice
+    nemo
+    zulu8
+    adoptopenjdk-icedtea-web
+    libei
+    libportal
+    tailscale-systray
+    yazi
+    xorriso
+    cifs-utils
+    thunar
+    gitnuro
+    #outline
     inputs.zen-browser.packages.x86_64-linux.default
     inputs.nixvim.packages.x86_64-linux.default
   ];
@@ -198,7 +233,36 @@
   services.flatpak.packages = [
     "com.microsoft.Edge"
     "app.openbubbles.OpenBubbles"
+    "io.github.subhra74.Muon"
+    "com.simplenote.Simplenote"
   ];
+
+  xdg.portal = {
+    enable = true;
+    config = {
+      common = {
+        default = [
+          "cosmic"
+          "gtk"
+        ];
+        # Use wlr for RemoteDesktop and ScreenCast
+        "org.freedesktop.impl.portal.RemoteDesktop" = "wlr";
+        "org.freedesktop.impl.portal.ScreenCast" = "wlr";
+      };
+    };
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-cosmic
+      pkgs.xdg-desktop-portal-wlr
+    ];
+  };
+  services.pipewire = {
+    enable = true;
+    alsa.support32Bit = true;
+    alsa.enable = true;
+    pulse.enable = true;
+    wireplumber.enable = true;
+  };
 
   #kernel options
   boot = {
@@ -235,15 +299,32 @@
   services.tailscale.enable = true;
   services.flatpak.enable = true;
   services.teamviewer.enable = true;
+  services.keybase.enable = true;
+  services.gvfs.enable = true;
+
   /*
-    services.greetd = {
-      enable = true;
-      settings = {
-        default.session = {
-          command = "${pkgs.tuigreet}/bin/tuigreet --sessions /usr/share/xsessions: /usr/share/wayland-sessions --remember --remember-user-session";
+    # Optional but recommended for network shares:
+    services.gvfs.backends = [
+      "smb"      # SMB/CIFS (Windows, Samba, NAS)
+      "nfs"      # NFS
+      "afc"      # iOS devices
+      "mtp"      # Android devices
+      "google"   # Google Drive
+    ];
+  */
+  # Required for SMB browsing:
+  services.samba.enable = true;
+  #services.samba.client.enable = true;
+
+  /*
+     services.greetd = {
+        enable = true;
+        settings = {
+          default.session = {
+            command = "${pkgs.tuigreet}/bin/tuigreet --sessions /usr/share/xsessions: /usr/share/wayland-sessions --remember --remember-user-session";
+          };
         };
       };
-    };
   */
 
   systemd.services.flatpak-repo = {
@@ -252,6 +333,8 @@
       flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
       flatpak install -y microsoft-edge
       flatpak install -y app.openbubbles.OpenBubbles
+      flatpak install -y io.github.subhra74.Muon
+      flatpak install -y com.simplenote.Simplenote
     '';
   };
 
