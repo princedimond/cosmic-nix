@@ -219,6 +219,7 @@
     cifs-utils
     thunar
     gitnuro
+    stirling-pdf-desktop
     #outline
     inputs.zen-browser.packages.x86_64-linux.default
     inputs.nixvim.packages.x86_64-linux.default
@@ -362,7 +363,7 @@
   #];
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+   services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
