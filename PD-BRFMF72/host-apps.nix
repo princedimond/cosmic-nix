@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
-    logseq
+#    logseq
     github-copilot-cli
     joplin
     joplin-desktop

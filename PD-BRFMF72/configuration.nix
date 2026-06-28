@@ -30,6 +30,8 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # Mesh-Central Options
+
   # Set your time zone.
   time.timeZone = "America/Chicago";
 
@@ -181,7 +183,7 @@
     onefetch
     warp-terminal
     zed-editor
-    logseq
+    #logseq
     #joplin-desktop
     standardnotes
     nil
@@ -220,6 +222,9 @@
     thunar
     gitnuro
     stirling-pdf-desktop
+    meshcentral
+    discord-canary
+    taxi
     #outline
     inputs.zen-browser.packages.x86_64-linux.default
     inputs.nixvim.packages.x86_64-linux.default
@@ -229,6 +234,8 @@
     "libsoup-2.74.3"
     "electron-35.7.5"
     "ventoy-1.1.07"
+    "openssl-1.1.1w"
+    "electron-39.8.10"
   ];
 
   services.flatpak.packages = [
@@ -268,7 +275,7 @@
   #kernel options
   boot = {
     # Kernel
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_latest;
     # This is for OBS Virtual Cam Support
     #kernelModules = [ "v4l2loopback" ];
     #extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
