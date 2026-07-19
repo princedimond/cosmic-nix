@@ -225,6 +225,9 @@
     meshcentral
     discord-canary
     taxi
+    anki
+    #anki-utils
+    #ankiAddons
     #outline
     inputs.zen-browser.packages.x86_64-linux.default
     inputs.nixvim.packages.x86_64-linux.default

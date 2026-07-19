@@ -7,5 +7,6 @@
     joplin-desktop
     joplin-cli
     television
+    zoom-us
   ];
 }
