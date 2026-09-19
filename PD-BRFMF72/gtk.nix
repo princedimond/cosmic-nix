@@ -3,7 +3,7 @@
     enable = true;
     theme = {
       name = "Catppuccin-GTK-Dark";
-      package = pkgs.magnetic-catppuccin-gtk;
+      package = pkgs.catppuccin-gtk;
     };
   };
 }

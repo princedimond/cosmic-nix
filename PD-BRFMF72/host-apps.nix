@@ -8,5 +8,6 @@
     joplin-cli
     television
     zoom-us
+    siyuan
   ];
 }

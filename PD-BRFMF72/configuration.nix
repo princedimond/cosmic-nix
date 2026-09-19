@@ -200,7 +200,7 @@
     logitech-udev-rules
     xdg-desktop-portal-cosmic
     cosmic-ext-tweaks
-    dia
+    #dia
     keybase-gui
     kbfs
     keybase
@@ -229,6 +229,7 @@
     #anki-utils
     #ankiAddons
     #outline
+    proton-vpn
     inputs.zen-browser.packages.x86_64-linux.default
     inputs.nixvim.packages.x86_64-linux.default
   ];
@@ -239,6 +240,7 @@
     "ventoy-1.1.07"
     "openssl-1.1.1w"
     "electron-39.8.10"
+    "keybase-gui-6.5.1"
   ];
 
   services.flatpak.packages = [
